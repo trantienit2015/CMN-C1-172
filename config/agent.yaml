@@ -1,0 +1,29 @@
+# Agent Manifest — AgentRegistry entry point.
+# Every key below is read at ROOT level; nesting them under an `agent:` block makes
+# them invisible to the registry (namespace/enabled fall back to defaults and
+# name/version never resolve). Runtime parameters live in config/config.yaml.
+id: "CMN-C1-172"
+name: "EnterprisePrivateDocSearchAgent"
+# Registry key component: {namespace}/{name}@{version} — the industry code, lowercased.
+namespace: "cmn"
+version: "1.0.0"
+enabled: true
+category: "Cat 1"
+industry: "CMN"
+# Static generation contract of the deployed agent.
+generation_mode: "deterministic"  # deterministic | llm
+# Compatibility metadata only — not an inheritance selector.
+base_type: "RAGAgent"
+
+# Entry point — one dotted import path (module.Class); the registry splits it on the
+# last dot, so a separate module:/class: pair never resolves.
+class: "src.graph.graph.EnterprisePrivateDocSearchAgent"
+
+# S-1 trust gate declared for the deployment. Per-node enforcement stays in the node
+# classes; this value does not replace it.
+required_trust_level: "INTERNAL"
+
+# Compile-time gates — every secret and extra actually used must be declared.
+requires:
+  secrets: []
+  extras: []
